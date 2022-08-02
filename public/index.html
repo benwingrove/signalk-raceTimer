@@ -1,0 +1,308 @@
+<!DOCTYPE html v1.0.3b>
+<html lang="en-US">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>
+			Countdown Timer
+		</title>
+		<style>
+			:root {
+			  --large: 40vw; 
+		  }
+			input[type=button] {
+			  background-color: red;
+			  border: none;
+			  color: white;
+	  		padding: 1vw 1vw;
+	  		text-align: center;
+	  		text-decoration: none;
+	  		display: inline-block;
+	  		font-size: 7vw;
+	  		margin: 0px 0px;
+	  		cursor: pointer;}
+			.clock {
+				font-family: Arial, Helvetica, sans-serif;
+				color: black;
+				margin : 0 auto;
+				font-size : var(--large);
+				text-align: center;
+				text-decoration: none;
+			}
+		.button {
+		background-color: black;
+		border: none;
+		color: white;
+		padding: 1vw 2vw;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 7vw;
+		margin: 0px 12px;
+		cursor: pointer;
+		}
+		.button:active {
+		background-color: white;
+		color: black;
+		}
+		</style>
+	</head>
+	<body onload="myFunction()">
+	    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	    <script type="text/javascript" src="js/time-picker.js"></script>
+		<link rel="stylesheet" href="css/nj-timepick.css" />
+		<script>
+		
+
+		var normalBackColor = "white";
+		var normalForeColor = "black";
+		var showNegative = false;
+		var resetTime = 300;
+		var timeLeft = 300;
+		var paused = true;
+		var roundTo = 1;
+		var allowAdd = true;
+		var addMinutes = 1;
+		var addSeconds = 10;
+		var pendingUpdate = 0;
+		var fontSize = "40vw";
+		
+		
+		
+
+		function myFunction() {
+		var now = new Date()
+		now = now.getTime()
+		var left = target - now
+		test = now + timeLeft
+		const minutes = 1;
+		const ms = 1000 * 60 * minutes;
+		pop2 = left/60000;
+		pop = Math.round(pop2)
+
+
+		target = pop
+
+		timeLeft = pop * 60000
+		var now = new Date()
+		now = now.getTime()
+		target = now + timeLeft
+		if (paused)
+		    display()
+		else
+		    display()
+		}
+
+		function update()
+		{
+		display()
+		if (paused)
+		return
+		var now = new Date()
+		now = now.getTime()
+		var left = target - now
+		if (left > 0 ||  showNegative)
+		{
+		var nextUpdate = left % 1000
+		if (nextUpdate == 0)
+		nextUpdate = 1
+		else if (nextUpdate < 0)
+		nextUpdate = 800
+		pendingUpdate = setTimeout("update()", nextUpdate)
+		}
+		if (left <= 0)
+			{setTimeout(function(){history.back()},1000)}
+		
+
+		}
+
+		function display()
+		{
+		var now = new Date()
+		now = now.getTime()
+		var left = target - now
+		if (paused)
+		left = timeLeft
+		if ((left % 1000 + 1000) % 1000 < 500)
+		left = Math.floor(left / 1000);
+		else
+		left = Math.ceil(left / 1000);
+		if (left < 0  &&  !showNegative)
+		left = 0
+		var round = roundTo
+
+		var rounded = Math.floor((left + round - 1) / round) * round
+		var minutes = Math.floor(rounded / 60)
+		var seconds = rounded % 60
+		if (seconds < 0)
+		{
+		minutes += 1
+		seconds = -seconds
+		if (minutes == 0)
+		minutes = "-" + minutes
+		}
+		var sec = seconds
+		if (seconds < 10)
+		sec = "0" + seconds
+		document.getElementById("countdown").innerHTML = minutes + ":" + sec
+			
+		if (minutes >= 60){
+		var hours = (minutes / 60)
+		var rhours = Math.floor(hours)
+		var minutes2 = (hours - rhours) * 60
+		var rminutes = Math.round(minutes2)
+		    let doubleMinutes = rminutes.toLocaleString('en-US', {
+		       minimumIntegerDigits: 2,
+				useGrouping: false})
+				// alert(rhours + ":" + doubleMinutes + ":" + sec)
+				
+			document.getElementById("countdown").innerHTML = rhours + ":" + doubleMinutes + ":" + sec
+			var r = document.querySelector(':root');
+			r.style.setProperty('--large', '30vw');
+			}
+		if (minutes >= 1 && minutes <= 59)
+		{document.getElementById("countdown").innerHTML =  minutes + ":" + sec
+			var r = document.querySelector(':root');
+			r.style.setProperty('--large', '40vw');
+		}
+		
+
+		}
+
+		//
+		// Start or stop the timer
+		//
+		function pause()
+		{
+		var now = new Date()
+		now = now.getTime()
+		var button = document.getElementById("pause-button")
+		if (paused)
+		{
+		paused = false
+		target = now + timeLeft
+
+
+
+		clearTimeout(pendingUpdate)
+		button.innerHTML = 'STOP'
+		update()
+		}
+		else
+		{
+		paused = true
+		timeLeft = target - now
+		button.innerHTML = 'START'
+		display()
+		}
+		}
+
+
+
+
+		//
+		// Reset the timer
+		//
+		function reset()
+		{
+
+
+		var now = new Date()
+		now = now.getTime()
+		var left = target - now
+		test = now + timeLeft
+		const minutes = 1;
+		const ms = 1000 * 60 * minutes;
+		pop2 = left/60000;
+		pop = Math.round(pop2)
+
+
+		target = pop
+
+		timeLeft = pop * 60000
+		var now = new Date()
+		now = now.getTime()
+		target = now + timeLeft
+		if (paused)
+		   display()
+		else
+		   display()
+		}
+
+
+
+		function addTimeMin()
+		{
+		clearTimeout(pendingUpdate)
+		var amount = 60
+		amount *= 1000
+		var now = new Date()
+		now = now.getTime()
+		if (showNegative  ||  target > now)
+		{
+		target += amount
+		timeLeft += amount
+		}
+		else
+		{
+		target = now + amount
+		timeLeft = amount
+		}
+		if (paused)
+		display()
+		else
+		update()
+		}	
+
+		function removeTimeMin()
+		{
+		clearTimeout(pendingUpdate)
+		var amount = -60
+		amount *= 1000
+		var now = new Date()
+		now = now.getTime()
+		if (showNegative  ||  target > now)
+		{
+		target += amount
+		timeLeft += amount
+		}
+		else
+		{
+		target = now + amount
+		timeLeft = amount
+		}
+		if (paused)
+		display()
+		else
+		update()
+		}	
+
+
+		var now = new Date();
+		now = now.getTime()
+		var target = now + resetTime * 1000
+		timeLeft = resetTime
+		
+		
+
+		
+		document.write("<center><span class='clock' id='countdown'><\/span><\/center>")
+		document.write("<center>")
+		// document.write("<input type='button' class='button2' value='P''> ")
+		document.write("<button class='button' onclick='addTimeMin()'>+1<\/button> ")
+		document.write("<button class='button' onclick='removeTimeMin()'>-1<\/button> ")
+		document.write("<button class='button' onclick='reset()'>SYNC<\/button>")
+		document.write("&nbsp;")
+		document.write("<button class='button' id='pause-button' onclick='pause()'>START<\/button>")
+		document.write("<br/><br/>")
+
+		document.write("<\/center>")
+
+		document.body.style.color = normalForeColor
+		document.body.style.backgroundColor = normalBackColor
+
+		pendingUpdate = setTimeout("update()", 1000)
+		display()
+		-->
+		</script>
+	</body>
+</html>
