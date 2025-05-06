@@ -1,14 +1,9 @@
 {
-  "name": "signalk-racetimer",
-  "version": "0.0.1",
-  "description": "A simple race countdown timer",
-  "keywords": [
-    "signalk-webapp"
-  ],
-  "author": "Ben Wingrove <ben@SaltAir.design>",
-  "signalk": {
-    "appIcon": "./assets/countDownIcon.png",
-    "displayName": "Countdown Race Timer"
-  },
-  "license": "ISC"
+  "name": "signalk-raceTimer",
+  "version": "1.0.0",
+  "description": "SignalK plugin for race start countdown.",
+  "main": "plugin.js",
+  "keywords": ["signalk", "plugin", "race", "timer", "countdown"],
+  "author": "Your Name",
+  "license": "MIT"
 }

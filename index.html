@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Race Timer</title>
+</head>
+<body>
+  <h1>Set Race Start Time</h1>
+  <form id="timeForm">
+    <label for="time">Start time (local):</label>
+    <input type="datetime-local" id="time" name="time" required>
+    <button type="submit">Start Countdown</button>
+  </form>
+  <p id="response"></p>
+
+  <script>
+    document.getElementById('timeForm').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const timeInput = document.getElementById('time').value
+      const isoString = new Date(timeInput).toISOString()
+
+      const response = await fetch('/plugins/signalk-raceTimer/setTargetTime', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ time: isoString })
+      })
+
+      const result = await response.json()
+      document.getElementById('response').innerText = JSON.stringify(result, null, 2)
+    })
+  </script>
+</body>
+</html>

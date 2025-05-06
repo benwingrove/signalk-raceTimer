@@ -1,0 +1,10 @@
+{
+  "id": "signalk-raceTimer",
+  "name": "Race Timer Plugin",
+  "description": "Calculates countdown to a user-defined race start time.",
+  "version": "1.0.0",
+  "main": "plugin.js",
+  "schema": {},
+  "interface": "plugin",
+  "keywords": ["race", "timer", "start", "countdown"]
+}
