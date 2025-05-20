@@ -2,8 +2,11 @@
   "name": "signalk-raceTimer",
   "version": "1.0.0",
   "description": "SignalK plugin for race start countdown.",
+  "keywords": [
+    "signalk-node-server-plugin",
+    "signalk-webapp"
+  ],
   "main": "plugin.js",
-  "keywords": ["signalk", "plugin", "race", "timer", "countdown"],
-  "author": "Your Name",
+  "author": "Ben Wingrove",
   "license": "MIT"
 }
